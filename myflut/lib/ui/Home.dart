@@ -135,11 +135,7 @@ class _BillSplitState extends State<BillSplit> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (_persons > 1) {
-                                  _persons++;
-                                } else {
-                                  //nothing
-                                }
+                                _persons++;
                               });
                             },
                             child: Container(
@@ -218,7 +214,7 @@ class _BillSplitState extends State<BillSplit> {
   }
   calculateTotalPerPerson(double bill,int split,int percent){
     var totalAmount=(bill+(calculateTotalTip(bill,percent)))/split;
-    return totalAmount;
+    return totalAmount.toStringAsFixed(2);
   }
   calculateTotalTip(double bill,int percent){
     double totalTip=0;
