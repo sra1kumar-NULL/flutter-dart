@@ -5,6 +5,118 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:myflut/model/Question.dart';
+
+class Quiz extends StatefulWidget {
+  const Quiz({Key? key}) : super(key: key);
+
+  @override
+  _QuizState createState() => _QuizState();
+}
+
+class _QuizState extends State<Quiz> {
+  List questionBank = [
+    Question.name("India got independence in 1947", true),
+    Question.name("India got independence in 1948", false),
+    Question.name("India got independence in 1949", false),
+    Question.name("India got independence in 1950", false),
+    Question.name("India got independence in 1951", false)
+  ];
+  int _currentQIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("True CitiZen"),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: Builder(
+          builder: (BuildContext context) {
+            return Container(
+              color: Colors.blueGrey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                      child: Image.asset(
+                          'images/flag.png', width: 400, height: 300)),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                            color: Colors.white38, style: BorderStyle.solid)),
+                    height: 100,
+                    child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(questionBank[_currentQIndex].questionText,
+                              style: TextStyle(fontSize: 18, color: Colors
+                                  .white70)),
+                        )),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      RaisedButton(
+                          onPressed: () => _clickVal(true, context),
+                          color: Colors.blueGrey,
+                          textColor: Colors.white,
+                          child: Text("TRUE")),
+                      RaisedButton(
+                          onPressed: () => _clickVal(false, context),
+                          color: Colors.blueGrey,
+                          textColor: Colors.white,
+                          child: Text("FALSE")),
+                      RaisedButton(
+                          onPressed: () {
+                            setState(() {
+                              _currentQIndex =
+                                  (_currentQIndex + 1) % questionBank.length;
+                            });
+                          },
+                          child: Icon(
+                            Icons.forward,
+                            color: Colors.white70,
+                          ),
+                          color: Colors.blueGrey),
+                    ],
+                  ),
+                  Spacer(),
+                ],
+              ),
+            );
+          }
+      ),
+    );
+  }
+
+  _clickVal(bool val, BuildContext context) {
+    if (val == questionBank[_currentQIndex].isCorrect) {
+      debugPrint("Correct");
+      final snackbar = SnackBar(content: Text("Correct"),
+        duration: Duration(milliseconds: 500),
+        backgroundColor: Colors.green,);
+      Scaffold.of(context).showSnackBar(snackbar);
+      _updateQ();
+    }
+    else {
+      final snackbar = SnackBar(content: Text("InCorrect"),
+        duration: Duration(milliseconds: 500),
+        backgroundColor: Colors.redAccent,);
+      Scaffold.of(context).showSnackBar(snackbar);
+      _updateQ();
+    }
+  }
+
+  _updateQ() {
+    setState(() {
+      _currentQIndex = (_currentQIndex + 1) % questionBank.length;
+    });
+  }
+}
 
 class BillSplit extends StatefulWidget {
   const BillSplit({Key? key}) : super(key: key);
@@ -42,14 +154,15 @@ class _BillSplitState extends State<BillSplit> {
                     Text(
                       "Per Person Count",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.blueGrey,
                           fontSize: 26,
                           fontWeight: FontWeight.bold),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
-                        "\$ ${calculateTotalPerPerson(_billAmount, _persons, _tipPercent)}",
+                        "\$ ${calculateTotalPerPerson(
+                            _billAmount, _persons, _tipPercent)}",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 36,
@@ -71,7 +184,7 @@ class _BillSplitState extends State<BillSplit> {
                 children: [
                   TextField(
                     keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    TextInputType.numberWithOptions(decimal: true),
                     cursorColor: Colors.purple,
                     style: TextStyle(fontSize: 22),
                     decoration: InputDecoration(
@@ -199,7 +312,7 @@ class _BillSplitState extends State<BillSplit> {
                           value: _tipPercent.toDouble(),
                           onChanged: (double value) {
                             setState(() {
-                              _tipPercent=value.round();
+                              _tipPercent = value.round();
                             });
                           })
                     ],
@@ -212,17 +325,20 @@ class _BillSplitState extends State<BillSplit> {
       ),
     );
   }
-  calculateTotalPerPerson(double bill,int split,int percent){
-    var totalAmount=(bill+(calculateTotalTip(bill,percent)))/split;
+
+  calculateTotalPerPerson(double bill, int split, int percent) {
+    var totalAmount = (bill + (calculateTotalTip(bill, percent))) / split;
     return totalAmount.toStringAsFixed(2);
   }
-  calculateTotalTip(double bill,int percent){
-    double totalTip=0;
-    if(bill<0|| bill==null || bill.toString().isEmpty){
+
+  calculateTotalTip(double bill, int percent) {
+    double totalTip = 0;
+    if (bill < 0 || bill == null || bill
+        .toString()
+        .isEmpty) {
       //
-    }
-    else{
-      totalTip=(bill*percent)/100;
+    } else {
+      totalTip = (bill * percent) / 100;
     }
     return totalTip;
   }
@@ -428,20 +544,20 @@ class ScaffoldEx extends StatelessWidget {
       ),
       body: Material(
         child: Center(child: CustomButton()
-            // InkWell(
-            //   child: Text(
-            //     "This is to Tap",textAlign: TextAlign.center,
-            //     style: TextStyle(
-            //         fontSize: 23.4,
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.redAccent.shade400
-            //     ),
-            //   ),
-            //   onTap: () => debugPrint("On Tapped"),
-            //
-            // ),
+          // InkWell(
+          //   child: Text(
+          //     "This is to Tap",textAlign: TextAlign.center,
+          //     style: TextStyle(
+          //         fontSize: 23.4,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.redAccent.shade400
+          //     ),
+          //   ),
+          //   onTap: () => debugPrint("On Tapped"),
+          //
+          // ),
 
-            ),
+        ),
         color: Colors.blueGrey,
         textStyle: TextStyle(
           fontStyle: FontStyle.normal,
