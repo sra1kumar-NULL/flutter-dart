@@ -7,6 +7,91 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:myflut/model/Question.dart';
 
+class MoviesListView extends StatelessWidget {
+  //const MoviesListView({Key? key}) : super(key: key);
+  List movies = [
+    "rambo",
+    "pursuit of happiness",
+    "titanic",
+    "mr.robot",
+    "peaky blinders",
+    "kingdom",
+    "gladiator",
+    "pablo escobar",
+    "God Father",
+    "Lucifer",
+    "Ong Bak",
+    "Bruce Lee",
+    "Avengers"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Movies"),
+        backgroundColor: Colors.blueGrey.shade700,
+        centerTitle: true,
+      ),
+      backgroundColor: Colors.blueGrey.shade200,
+      body: ListView.builder(
+        itemCount: movies.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+              elevation: 4.7,
+              child: ListTile(
+                leading: CircleAvatar(
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Text(
+                      "<M>",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                trailing: Text("loading..."),
+                title: Text(movies[index]),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MoviesListViewDetails()));
+                },
+                
+                //onTap: ()=>debugPrint("movie name : ${movies.elementAt(index)}"),
+                subtitle: Text("subtitles are available"),
+              ));
+        },
+      ),
+    );
+  }
+}
+
+class MoviesListViewDetails extends StatelessWidget {
+  const MoviesListViewDetails({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Movie Details"),
+        backgroundColor: Colors.blueGrey.shade700,
+      ),
+      body: Center(
+        child: Container(
+          child: RaisedButton(
+            child: Text("Go back"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.blueGrey.shade200,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class Quiz extends StatefulWidget {
   const Quiz({Key? key}) : super(key: key);
 
@@ -32,80 +117,80 @@ class _QuizState extends State<Quiz> {
         centerTitle: true,
         backgroundColor: Colors.blueGrey,
       ),
-      body: Builder(
-          builder: (BuildContext context) {
-            return Container(
-              color: Colors.blueGrey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Builder(builder: (BuildContext context) {
+        return Container(
+          color: Colors.blueGrey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                  child:
+                      Image.asset('images/flag.png', width: 400, height: 300)),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(
+                        color: Colors.white38, style: BorderStyle.solid)),
+                height: 100,
+                child: Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(questionBank[_currentQIndex].questionText,
+                      style: TextStyle(fontSize: 18, color: Colors.white70)),
+                )),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Center(
-                      child: Image.asset(
-                          'images/flag.png', width: 400, height: 300)),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(
-                            color: Colors.white38, style: BorderStyle.solid)),
-                    height: 100,
-                    child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(questionBank[_currentQIndex].questionText,
-                              style: TextStyle(fontSize: 18, color: Colors
-                                  .white70)),
-                        )),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      RaisedButton(
-                          onPressed: () => _clickVal(true, context),
-                          color: Colors.blueGrey,
-                          textColor: Colors.white,
-                          child: Text("TRUE")),
-                      RaisedButton(
-                          onPressed: () => _clickVal(false, context),
-                          color: Colors.blueGrey,
-                          textColor: Colors.white,
-                          child: Text("FALSE")),
-                      RaisedButton(
-                          onPressed: () {
-                            setState(() {
-                              _currentQIndex =
-                                  (_currentQIndex + 1) % questionBank.length;
-                            });
-                          },
-                          child: Icon(
-                            Icons.forward,
-                            color: Colors.white70,
-                          ),
-                          color: Colors.blueGrey),
-                    ],
-                  ),
-                  Spacer(),
+                  RaisedButton(
+                      onPressed: () => _clickVal(true, context),
+                      color: Colors.blueGrey,
+                      textColor: Colors.white,
+                      child: Text("TRUE")),
+                  RaisedButton(
+                      onPressed: () => _clickVal(false, context),
+                      color: Colors.blueGrey,
+                      textColor: Colors.white,
+                      child: Text("FALSE")),
+                  RaisedButton(
+                      onPressed: () {
+                        setState(() {
+                          _currentQIndex =
+                              (_currentQIndex + 1) % questionBank.length;
+                        });
+                      },
+                      child: Icon(
+                        Icons.forward,
+                        color: Colors.white70,
+                      ),
+                      color: Colors.blueGrey),
                 ],
               ),
-            );
-          }
-      ),
+              Spacer(),
+            ],
+          ),
+        );
+      }),
     );
   }
 
   _clickVal(bool val, BuildContext context) {
     if (val == questionBank[_currentQIndex].isCorrect) {
       debugPrint("Correct");
-      final snackbar = SnackBar(content: Text("Correct"),
+      final snackbar = SnackBar(
+        content: Text("Correct"),
         duration: Duration(milliseconds: 500),
-        backgroundColor: Colors.green,);
+        backgroundColor: Colors.green,
+      );
       Scaffold.of(context).showSnackBar(snackbar);
       _updateQ();
-    }
-    else {
-      final snackbar = SnackBar(content: Text("InCorrect"),
+    } else {
+      final snackbar = SnackBar(
+        content: Text("InCorrect"),
         duration: Duration(milliseconds: 500),
-        backgroundColor: Colors.redAccent,);
+        backgroundColor: Colors.redAccent,
+      );
       Scaffold.of(context).showSnackBar(snackbar);
       _updateQ();
     }
@@ -161,8 +246,7 @@ class _BillSplitState extends State<BillSplit> {
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
-                        "\$ ${calculateTotalPerPerson(
-                            _billAmount, _persons, _tipPercent)}",
+                        "\$ ${calculateTotalPerPerson(_billAmount, _persons, _tipPercent)}",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 36,
@@ -184,7 +268,7 @@ class _BillSplitState extends State<BillSplit> {
                 children: [
                   TextField(
                     keyboardType:
-                    TextInputType.numberWithOptions(decimal: true),
+                        TextInputType.numberWithOptions(decimal: true),
                     cursorColor: Colors.purple,
                     style: TextStyle(fontSize: 22),
                     decoration: InputDecoration(
@@ -333,9 +417,7 @@ class _BillSplitState extends State<BillSplit> {
 
   calculateTotalTip(double bill, int percent) {
     double totalTip = 0;
-    if (bill < 0 || bill == null || bill
-        .toString()
-        .isEmpty) {
+    if (bill < 0 || bill == null || bill.toString().isEmpty) {
       //
     } else {
       totalTip = (bill * percent) / 100;
@@ -544,20 +626,20 @@ class ScaffoldEx extends StatelessWidget {
       ),
       body: Material(
         child: Center(child: CustomButton()
-          // InkWell(
-          //   child: Text(
-          //     "This is to Tap",textAlign: TextAlign.center,
-          //     style: TextStyle(
-          //         fontSize: 23.4,
-          //         fontWeight: FontWeight.bold,
-          //         color: Colors.redAccent.shade400
-          //     ),
-          //   ),
-          //   onTap: () => debugPrint("On Tapped"),
-          //
-          // ),
+            // InkWell(
+            //   child: Text(
+            //     "This is to Tap",textAlign: TextAlign.center,
+            //     style: TextStyle(
+            //         fontSize: 23.4,
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.redAccent.shade400
+            //     ),
+            //   ),
+            //   onTap: () => debugPrint("On Tapped"),
+            //
+            // ),
 
-        ),
+            ),
         color: Colors.blueGrey,
         textStyle: TextStyle(
           fontStyle: FontStyle.normal,

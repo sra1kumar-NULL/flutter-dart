@@ -4,7 +4,7 @@ import 'package:myflut/ui/Home.dart';
 void main() {
   runApp(
     new MaterialApp(
-      home: Quiz(),
+      home: MoviesListView(),
     )
   );
 }
