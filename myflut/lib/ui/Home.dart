@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:myflut/model/Question.dart';
 
+
 class MoviesListView extends StatelessWidget {
   //const MoviesListView({Key? key}) : super(key: key);
   List movies = [
@@ -55,9 +56,9 @@ class MoviesListView extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MoviesListViewDetails()));
+                          builder: (context) => MoviesListViewDetails(movies.elementAt(index))));
                 },
-                
+
                 //onTap: ()=>debugPrint("movie name : ${movies.elementAt(index)}"),
                 subtitle: Text("subtitles are available"),
               ));
@@ -68,7 +69,10 @@ class MoviesListView extends StatelessWidget {
 }
 
 class MoviesListViewDetails extends StatelessWidget {
-  const MoviesListViewDetails({Key? key}) : super(key: key);
+  String movieName;
+
+
+  MoviesListViewDetails(this.movieName);
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +83,22 @@ class MoviesListViewDetails extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: RaisedButton(
-            child: Text("Go back"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.blueGrey.shade200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children:[
+              Text("Movie name : ${this.movieName}",style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color:Colors.black
+              ),),
+              RaisedButton(
+                child: Text("Go back"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                color: Colors.blueGrey.shade200,
+              ),
+            ],
           ),
         ),
       ),
