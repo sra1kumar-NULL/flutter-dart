@@ -8,6 +8,8 @@ import 'package:flutter/widgets.dart';
 import 'package:myflut/model/Question.dart';
 
 
+
+
 class MoviesListView extends StatelessWidget {
   //const MoviesListView({Key? key}) : super(key: key);
   List movies = [
@@ -158,6 +160,18 @@ class _QuizState extends State<Quiz> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   RaisedButton(
+                      onPressed: () {
+                        setState(() {
+                          _currentQIndex =
+                              (_currentQIndex - 1) % questionBank.length;
+                        });
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white70,
+                      ),
+                      color: Colors.blueGrey),
+                  RaisedButton(
                       onPressed: () => _clickVal(true, context),
                       color: Colors.blueGrey,
                       textColor: Colors.white,
@@ -175,7 +189,7 @@ class _QuizState extends State<Quiz> {
                         });
                       },
                       child: Icon(
-                        Icons.forward,
+                        Icons.arrow_forward,
                         color: Colors.white70,
                       ),
                       color: Colors.blueGrey),
