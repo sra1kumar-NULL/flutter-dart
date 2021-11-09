@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/sam/corleone/app/myflut/BuildConfig.java
+ com.sam.corleone.app.myflut.BuildConfig

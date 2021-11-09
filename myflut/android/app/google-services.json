@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "442575369323",
+    "project_id": "test-project-8a369",
+    "storage_bucket": "test-project-8a369.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442575369323:android:aa50ca1d236dbfb392ad2e",
+        "android_client_info": {
+          "package_name": "com.sam.corleone.app.myflut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442575369323-ahg6m7pgpem6nabh73auf8dv55qni6gq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOj-ouVAj1fXW5YL-CyIcjeMMH_tQQ7AU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442575369323-ahg6m7pgpem6nabh73auf8dv55qni6gq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
